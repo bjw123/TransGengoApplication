@@ -6,6 +6,7 @@ Object to recycle ML Kit translation modal and use in different activities/fragm
 package com.example.japaneselanguageappfinal.ui.home
 
 import android.util.Log
+import android.widget.Toast
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
@@ -14,10 +15,7 @@ import com.google.mlkit.nl.translate.TranslatorOptions
 
 object TranslationModel
 {
-
-
-
-    fun translateEnToJp(translateText: String): String {
+    fun translateEnToJp(translateText: String) {
 
 
         val options = TranslatorOptions.Builder()
@@ -42,17 +40,20 @@ object TranslationModel
         englishJapaneseTranslator.translate(translateText)
             .addOnSuccessListener { translatedText ->
                 // Translation successful.
-                Log.i("success", translateText)
+                Log.i("success", translatedText)
+
+
             }
             .addOnFailureListener { exception ->
                 // Error.
                 // ...
                 Log.e("error", "please wait 10-20 secondsfor model to download")
             }
-        return translateText
+        }
+
     }
 
-    fun translateJpToEn(translateText:String): String {
+    fun translateJpToEn(translateText:String) {
         val options = TranslatorOptions.Builder()
             .setSourceLanguage(TranslateLanguage.JAPANESE)
             .setTargetLanguage(TranslateLanguage.ENGLISH)
@@ -78,12 +79,11 @@ object TranslationModel
             .addOnSuccessListener { translatedText ->
                 // Translation successful.
                 Log.i("success", translateText)
+                //Toast.makeText(context, translatedText )
             }
             .addOnFailureListener { exception ->
                 // Error.
                 // ...
                 Log.e("error", "please wait 10-20 secondsfor model to download")
             }
-        return translateText
     }
-}

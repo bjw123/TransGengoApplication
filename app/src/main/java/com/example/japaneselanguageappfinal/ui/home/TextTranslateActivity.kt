@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.japaneselanguageappfinal.R
+import com.example.japaneselanguageappfinal.ui.draw.StrokeManager
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
@@ -54,6 +55,7 @@ class TextTranslateActivity : AppCompatActivity() {
             }
 
 
+
         button.setOnClickListener {
             englishJapaneseTranslator.translate(editText.text.toString())
                 .addOnSuccessListener { translatedText ->
@@ -66,5 +68,6 @@ class TextTranslateActivity : AppCompatActivity() {
                     textView.text = "translation failed"
                 }
         }
+
     }
 }

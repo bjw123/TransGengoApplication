@@ -35,12 +35,15 @@ class ImageTranslateActivity : AppCompatActivity() {
         }
     }
 
+    //take Photo
     fun doProcess(view: View?) {
         //open the camera => create an Intent object
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, 101)
     }
 
+
+    //on image selected
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val bundle = data!!.extras
@@ -50,6 +53,7 @@ class ImageTranslateActivity : AppCompatActivity() {
         imageView!!.setImageBitmap(bitmap)
 
 
+        //Pass bitmap over to library
         val image = InputImage.fromBitmap(bitmap, 0)
         val recognizer = TextRecognition.getClient()
         val result = recognizer.process(image)
