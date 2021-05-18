@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class DrawViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is draw Fragment"
+        value = "Practice you Japanese writing skills"
     }
     val text: LiveData<String> = _text
 }
