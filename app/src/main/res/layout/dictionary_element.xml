@@ -55,8 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:text="TextView"
-                app:layout_constraintBaseline_toBaselineOf="@+id/meaning_txtview"
-                app:layout_constraintStart_toEndOf="@+id/meaning_txtview" />
+                app:layout_constraintStart_toEndOf="@+id/meaning_txtview"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/reading_jsontxt"
