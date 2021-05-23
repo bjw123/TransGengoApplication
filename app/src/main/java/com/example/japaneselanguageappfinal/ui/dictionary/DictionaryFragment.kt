@@ -30,12 +30,10 @@ class DictionaryFragment : Fragment() {
         dictionaryViewModel =
                 ViewModelProvider(this).get(DictionaryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dictionary, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
+        //val textView: TextView = root.findViewById(R.id.text_notifications)
         //val testText: TextView = root.findViewById(R.id.test)
         val recyclerView: RecyclerView = root.findViewById(R.id.dictionary_recycle)
-        dictionaryViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
 
         //Get JSON for JLPT N5
         val jsonString = context?.assets?.readAssetsFile("n5.json")

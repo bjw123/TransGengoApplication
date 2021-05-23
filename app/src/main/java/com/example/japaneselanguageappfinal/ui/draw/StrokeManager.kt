@@ -15,7 +15,6 @@ package com.example.japaneselanguageappfinal.ui.draw
 import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
-import com.example.japaneselanguageappfinal.MainActivity
 
 import com.google.mlkit.common.MlKitException
 import com.google.mlkit.common.model.DownloadConditions
@@ -28,6 +27,7 @@ object StrokeManager {
     private var inkBuilder = Ink.builder()
     private var strokeBuilder = Ink.Stroke.builder()
     private lateinit var model: DigitalInkRecognitionModel
+    lateinit var output: String
 
     //create stroke from user drawing on canvas that is a part of an Ink object
     fun addNewTouchEvent(event: MotionEvent) {
@@ -90,6 +90,7 @@ object StrokeManager {
 
         recognizer.recognize(ink)
             .addOnSuccessListener { result: RecognitionResult ->
+                output = result.candidates[0].text
                 Toast.makeText(context, "I see ${result.candidates[0].text}", Toast.LENGTH_LONG)
                     .show()
 
