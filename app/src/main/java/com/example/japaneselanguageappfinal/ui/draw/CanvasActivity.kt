@@ -18,10 +18,13 @@ class CanvasActivity : AppCompatActivity() {
         val clear = findViewById<Button>(R.id.clear)
 
 
+        //init strokemanager object and call to recognize what is on canvas
         StrokeManager.download()
         recognize.setOnClickListener {
             StrokeManager.recognize(this)
         }
+
+        //clear canvas and stroke manager
         clear.setOnClickListener {
             drawingView.clear()
             StrokeManager.clear()

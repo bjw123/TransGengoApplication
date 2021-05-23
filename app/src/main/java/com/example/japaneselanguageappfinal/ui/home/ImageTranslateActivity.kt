@@ -61,26 +61,6 @@ class ImageTranslateActivity : AppCompatActivity() {
                 // Task completed successfully
                 // ...
                 val resultText = visionText.text
-                /*
-                for (block in visionText.textBlocks) {
-                    val blockText = block.text
-                    val blockCornerPoints = block.cornerPoints
-                    val blockFrame = block.boundingBox
-                    for (line in block.lines) {
-                        val lineText = line.text
-                        val lineCornerPoints = line.cornerPoints
-                        val lineFrame = line.boundingBox
-                        for (element in line.elements) {
-                            val elementText = element.text
-                            val elementCornerPoints = element.cornerPoints
-                            val elementFrame = element.boundingBox
-                        }
-                    }
-                }
-                 */
-                //Call translater to convert to japanese
-
-
                 textView!!.setText(resultText)
             }
             .addOnFailureListener { e ->

@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "852849486028",
+    "project_id": "textrecognizer-33ed1",
+    "storage_bucket": "textrecognizer-33ed1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852849486028:android:f3457ff6a239a74d297a69",
+        "android_client_info": {
+          "package_name": "com.example.camera"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852849486028-2s5l3u1thp3hsoak6ikra4qk7i9q92q5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiRcVGkQQLQU8ofjULaxUBA-hRyPZcQyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852849486028-2s5l3u1thp3hsoak6ikra4qk7i9q92q5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852849486028:android:e36af48a2f36c71b297a69",
+        "android_client_info": {
+          "package_name": "com.example.japaneselanguageappfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852849486028-2s5l3u1thp3hsoak6ikra4qk7i9q92q5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiRcVGkQQLQU8ofjULaxUBA-hRyPZcQyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852849486028-2s5l3u1thp3hsoak6ikra4qk7i9q92q5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852849486028:android:c4ef313197a21062297a69",
+        "android_client_info": {
+          "package_name": "com.worldsnas.textrecognizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852849486028-2s5l3u1thp3hsoak6ikra4qk7i9q92q5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiRcVGkQQLQU8ofjULaxUBA-hRyPZcQyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852849486028-2s5l3u1thp3hsoak6ikra4qk7i9q92q5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

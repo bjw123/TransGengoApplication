@@ -23,6 +23,8 @@ class TextTranslateActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView)
         val button = findViewById<Button>(R.id.button)
 
+
+        //specify + initialize model
         val options = TranslatorOptions.Builder()
             .setSourceLanguage(TranslateLanguage.ENGLISH)
             .setTargetLanguage(TranslateLanguage.JAPANESE)
@@ -32,6 +34,7 @@ class TextTranslateActivity : AppCompatActivity() {
             .requireWifi()
             .build()
 
+        //download model if not already downloaded
         englishJapaneseTranslator.downloadModelIfNeeded(conditions)
             .addOnSuccessListener {
                 // Model downloaded successfully. Okay to start translating.
@@ -43,6 +46,7 @@ class TextTranslateActivity : AppCompatActivity() {
                 Log.e("Error", "Model not downloaded")
             }
 
+        //translation example
         englishJapaneseTranslator.translate("ready to translate")
             .addOnSuccessListener { translatedText ->
                 // Translation successful.
@@ -56,6 +60,7 @@ class TextTranslateActivity : AppCompatActivity() {
 
 
 
+        //translate user input
         button.setOnClickListener {
             englishJapaneseTranslator.translate(editText.text.toString())
                 .addOnSuccessListener { translatedText ->

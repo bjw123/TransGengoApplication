@@ -22,12 +22,14 @@ import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.common.model.RemoteModelManager
 import com.google.mlkit.vision.digitalink.*
 
-
+//object for creating Ink objects based upon DrawingView and passing ink object to the model to get recognition
 object StrokeManager {
+    //init ink builder and model
     private var inkBuilder = Ink.builder()
     private var strokeBuilder = Ink.Stroke.builder()
     private lateinit var model: DigitalInkRecognitionModel
 
+    //create stroke from user drawing on canvas that is a part of an Ink object
     fun addNewTouchEvent(event: MotionEvent) {
         val action = event.actionMasked
         val x = event.x
@@ -54,6 +56,7 @@ object StrokeManager {
         }
     }
 
+    //download model if not already downloaded
     fun download() {
         var modelIdentifier: DigitalInkRecognitionModelIdentifier? = null
         try {
@@ -76,6 +79,7 @@ object StrokeManager {
             }
     }
 
+    //pass ink object to model and display recognition via a Toast
     fun recognize(context: CanvasActivity) {
         val recognizer: DigitalInkRecognizer =
             DigitalInkRecognition.getClient(
@@ -83,9 +87,6 @@ object StrokeManager {
             )
 
         val ink = inkBuilder.build()
-
-
-
 
         recognizer.recognize(ink)
             .addOnSuccessListener { result: RecognitionResult ->
@@ -98,6 +99,9 @@ object StrokeManager {
             }
     }
 
+
+
+    //empty the ink object for user to create a new one
     fun clear() {
         inkBuilder = Ink.builder()
     }

@@ -31,6 +31,7 @@ class DrawFragment : Fragment() {
         })
         val canvasBtn: Button = root.findViewById(R.id.canvas_btn)
 
+        //redirect to canvas
         canvasBtn.setOnClickListener({
             var clickintent = Intent(context, CanvasActivity()::class.java)
             startActivity(clickintent)
