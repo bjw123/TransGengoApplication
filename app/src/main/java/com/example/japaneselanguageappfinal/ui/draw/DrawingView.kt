@@ -1,5 +1,5 @@
 /*
-To set this up I used an open source project that the creator uploaded on his blog
+To set this up I used an open source tutorial project that the creator uploaded on his blog
 https://github.com/nikit19/iSee
 Was extremely helpful as the docs did not walk me through canvas API very well
 
@@ -41,11 +41,13 @@ class DrawingView @JvmOverloads constructor(
         invalidate()
     }
 
+    //on draw display the stroke on canvas
     override fun onDraw(canvas: Canvas) {
         canvas.drawBitmap(canvasBitmap, 0f, 0f, canvasPaint)
         canvas.drawPath(currentStroke, currentStrokePaint)
     }
 
+    //on touch display on canvas and configure send to strokeManager object
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val action = event.actionMasked
         val x = event.x
@@ -86,6 +88,7 @@ class DrawingView @JvmOverloads constructor(
         canvasPaint = Paint(Paint.DITHER_FLAG)
     }
 
+    //clear canvas
     fun clear() {
         currentStroke.reset()
         onSizeChanged(

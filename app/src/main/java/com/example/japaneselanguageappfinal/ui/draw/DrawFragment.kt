@@ -30,11 +30,23 @@ class DrawFragment : Fragment() {
             textView.text = it
         })
         val canvasBtn: Button = root.findViewById(R.id.canvas_btn)
+        //val challengeBtn: Button = root.findViewById(R.id.challenge_btn)
 
+        //redirect to canvas
         canvasBtn.setOnClickListener({
             var clickintent = Intent(context, CanvasActivity()::class.java)
             startActivity(clickintent)
         })
+
+
+
+        /*
+        challengeBtn.setOnClickListener({
+            var clickintent = Intent(context, ChallengeModeActivity()::class.java)
+            startActivity(clickintent)
+        })
+
+         */
         return root
     }
 }

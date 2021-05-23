@@ -14,12 +14,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.japaneselanguageappfinal.R
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.Translator
+import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 
 class ImageTranslateActivity : AppCompatActivity() {
     var imageView: ImageView? = null
     var textView: TextView? = null
+    var translatedTextView: TextView? = null
     //@RequiresApi(api = Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +34,16 @@ class ImageTranslateActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageId)
         //find textview
         textView = findViewById(R.id.textId)
+        translatedTextView = findViewById(R.id.translatedText)
         //check app level permission is granted for Camera
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             //grant the permission
             requestPermissions(arrayOf(Manifest.permission.CAMERA), 101)
         }
+
+
+
+
     }
 
     //take Photo
@@ -51,6 +62,27 @@ class ImageTranslateActivity : AppCompatActivity() {
         val bitmap = bundle!!["data"] as Bitmap?
         //set image in imageview
         imageView!!.setImageBitmap(bitmap)
+        //specify + initialize model
+        val options = TranslatorOptions.Builder()
+                .setSourceLanguage(TranslateLanguage.ENGLISH)
+                .setTargetLanguage(TranslateLanguage.JAPANESE)
+                .build()
+        val englishJapaneseTranslator: Translator = Translation.getClient(options)
+        val conditions = DownloadConditions.Builder()
+                .requireWifi()
+                .build()
+
+        //download model if not already downloaded
+        englishJapaneseTranslator.downloadModelIfNeeded(conditions)
+                .addOnSuccessListener {
+                    // Model downloaded successfully. Okay to start translating.
+                    Log.i("Success", "Japanese Model downloaded")
+
+                }
+                .addOnFailureListener { exception ->
+                    // Model couldn’t be downloaded or other internal error.
+                    Log.e("Error", "Model not downloaded")
+                }
 
 
         //Pass bitmap over to library
@@ -61,27 +93,17 @@ class ImageTranslateActivity : AppCompatActivity() {
                 // Task completed successfully
                 // ...
                 val resultText = visionText.text
-                /*
-                for (block in visionText.textBlocks) {
-                    val blockText = block.text
-                    val blockCornerPoints = block.cornerPoints
-                    val blockFrame = block.boundingBox
-                    for (line in block.lines) {
-                        val lineText = line.text
-                        val lineCornerPoints = line.cornerPoints
-                        val lineFrame = line.boundingBox
-                        for (element in line.elements) {
-                            val elementText = element.text
-                            val elementCornerPoints = element.cornerPoints
-                            val elementFrame = element.boundingBox
-                        }
-                    }
-                }
-                 */
-                //Call translater to convert to japanese
-
-
                 textView!!.setText(resultText)
+                englishJapaneseTranslator.translate(resultText)
+                        .addOnSuccessListener { translatedText ->
+                            // Translation successful.
+                            translatedTextView?.text = translatedText
+                        }
+                        .addOnFailureListener { exception ->
+                            // Error.
+                            // ...
+                            translatedTextView?.text   = "please try again in 20 seconds (model has not downloaded)"
+                        }
             }
             .addOnFailureListener { e ->
                 // Task failed with an exception
@@ -89,6 +111,8 @@ class ImageTranslateActivity : AppCompatActivity() {
                 Log.e("Error", "vision failed")
                 textView!!.setText("failed")
             }
+
+
 
     }
 }
