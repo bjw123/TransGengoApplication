@@ -8,12 +8,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.japaneselanguageappfinal.R
+import com.google.android.gms.tasks.Task
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.gson.*
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
@@ -21,15 +25,28 @@ import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
+import java.io.ByteArrayOutputStream
+
+
+//private lateinit var functions: FirebaseFunctions
+
+
+
+
 
 class ImageTranslateActivity : AppCompatActivity() {
+
     var imageView: ImageView? = null
     var textView: TextView? = null
     var translatedTextView: TextView? = null
+    lateinit var functions: FirebaseFunctions
+    functions = Firebase.functions
     //@RequiresApi(api = Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_translate)
+
+
 
         imageView = findViewById(R.id.imageId)
         //find textview
@@ -86,6 +103,7 @@ class ImageTranslateActivity : AppCompatActivity() {
                 }
 
 
+        /*
         //Pass bitmap over to library
         val image = InputImage.fromBitmap(bitmap, 0)
         val recognizer = TextRecognition.getClient()
@@ -113,7 +131,73 @@ class ImageTranslateActivity : AppCompatActivity() {
                 textView!!.setText("failed")
             }
 
+         */
+
+        // Convert bitmap to base64 encoded string
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        if (bitmap != null) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        }
+        val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
+        val base64encoded = Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+        //functions = Firebase.functions
 
 
+        // Create json request to cloud vision
+        val request = JsonObject()
+// Add image to request
+        val image = JsonObject()
+        image.add("content", JsonPrimitive(base64encoded))
+        request.add("image", image)
+//Add features to the request
+        val feature = JsonObject()
+        feature.add("type", JsonPrimitive("TEXT_DETECTION"))
+// Alternatively, for DOCUMENT_TEXT_DETECTION:
+// feature.add("type", JsonPrimitive("DOCUMENT_TEXT_DETECTION"))
+        val features = JsonArray()
+        features.add(feature)
+        request.add("features", features)
+        /* CAN PROVIDE HINTS
+    val imageContext = JsonObject()
+    val languageHints = JsonArray()
+    languageHints.add("en")
+    imageContext.add("languageHints", languageHints)
+    request.add("imageContext", imageContext)
+
+         */
+
+        annotateImage(request.toString())
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        // Task failed with an exception
+                        // ...
+                        val annotation = task.result!!.asJsonArray[0].asJsonObject["fullTextAnnotation"].asJsonObject
+                        System.out.format("%nComplete annotation:")
+                        System.out.format("%n%s", annotation["text"].asString)
+                        translatedTextView?.text = annotation["text"].asString
+
+                    } else {
+                        // Task completed successfully
+                        // ...
+                    }
+                }
+
+
+
+
+
+
+    }
+    private fun annotateImage(requestJson: String): Task<JsonElement> {
+        return functions
+                .getHttpsCallable("annotateImage")
+                .call(requestJson)
+                .continueWith { task ->
+                    // This continuation runs on either success or failure, but if the task
+                    // has failed then result will throw an Exception which will be
+                    // propagated down.
+                    val result = task.result?.data
+                    JsonParser.parseString(Gson().toJson(result))
+                }
     }
 }
