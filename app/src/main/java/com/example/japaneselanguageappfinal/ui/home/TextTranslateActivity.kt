@@ -3,8 +3,10 @@ package com.example.japaneselanguageappfinal.ui.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.japaneselanguageappfinal.R
 import com.example.japaneselanguageappfinal.ui.draw.StrokeManager
@@ -22,6 +24,9 @@ class TextTranslateActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editText)
         val textView = findViewById<TextView>(R.id.textView)
         val button = findViewById<Button>(R.id.button)
+        val loadingIcon = findViewById<ProgressBar>(R.id.progressBar)
+
+        textView.text = "Downloading models please wait..."
 
 
         //specify + initialize model
@@ -39,6 +44,8 @@ class TextTranslateActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 // Model downloaded successfully. Okay to start translating.
                 Log.i("Success", "Japanese Model downloaded")
+                textView.text = "Ready to translate"
+                loadingIcon.visibility= View.GONE
 
             }
             .addOnFailureListener { exception ->
@@ -47,6 +54,7 @@ class TextTranslateActivity : AppCompatActivity() {
             }
 
         //translation example
+        /*
         englishJapaneseTranslator.translate("ready to translate")
             .addOnSuccessListener { translatedText ->
                 // Translation successful.
@@ -58,6 +66,7 @@ class TextTranslateActivity : AppCompatActivity() {
                 textView.text = "please wait 10-20 secondsfor model to download"
             }
 
+         */
 
 
         //translate user input

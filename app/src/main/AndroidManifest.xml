@@ -9,9 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JapaneseLanguageAppFinal">
-        <activity android:name=".ui.draw.ChallengeModeActivity"></activity>
+
         <activity android:name=".ui.draw.CanvasActivity" />
 
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" /> <!-- To use multiple models: android:value="ocr,model2,model3" -->
+        <activity android:name=".ui.home.ImageTranslateActivity" />
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" /> <!-- To use multiple models: android:value="ocr,model2,model3" -->

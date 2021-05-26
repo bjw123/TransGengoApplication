@@ -77,6 +77,7 @@ class ImageTranslateActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     // Model downloaded successfully. Okay to start translating.
                     Log.i("Success", "Japanese Model downloaded")
+                    translatedTextView?.text = "Ready to Translate"
 
                 }
                 .addOnFailureListener { exception ->
